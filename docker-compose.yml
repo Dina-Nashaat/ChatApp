@@ -1,6 +1,25 @@
 version: '3'
 
 services:
+  app:
+    image: dinanashaat/chatapp
+    ports:
+      - 3000:3000
+    command: bash -c "rm -f tmp/pids/server.pid && rails db:drop db:create db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    depends_on:
+      - mysql
+      - redis
+      - elasticsearch
+      - sidekiq
+    links:
+      - redis
+      - mysql
+      - elasticsearch
+      - sidekiq
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - ELASTICSEARCH_URL=elasticsearch
+      - RAILS_ENV=development
   mysql:
     image: mysql:5.6.34
     ports:
@@ -47,26 +66,6 @@ services:
     environment:
       - REDIS_URL=redis://redis:6379/0
       - ELASTICSEARCH_URL=elasticsearch
-
-  app:
-    image: dinanashaat/chatapp
-    ports:
-      - 3000:3000
-    command: bash -c "rm -f tmp/pids/server.pid && rails db:drop db:create db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    depends_on:
-      - mysql
-      - redis
-      - elasticsearch
-      - sidekiq
-    links:
-      - redis
-      - mysql
-      - elasticsearch
-      - sidekiq
-    environment:
-      - REDIS_URL=redis://redis:6379/0
-      - ELASTICSEARCH_URL=elasticsearch
-      - RAILS_ENV=development
 volumes:
   esdata1:
     driver: local
