@@ -23,7 +23,7 @@ opeartion, which ensures no two resources can access the same key to increment.
 - Message search through ElasticSearch  
 Using `ElasticSearch` and `SearchKick` to partially search for messages belonging to a certain chat. Partial text means a whole word in between the text.
 
-- Cron Job to update ElasticSearch indices ````Model.reindex```  
+- Cron Job to update ElasticSearch indices ```Model.reindex```  
 A cron job that runs every 1 minute to update ElasticSearch indices.
 
 ## Endpoint Documentation
@@ -35,7 +35,7 @@ Postman Collection is automated. All you have to do is press `Send`. Updating en
 ### Docker
 * Configuration
 Run the application through docker: ```docker-compose up```
-** Recommneded: run ```docker-compose up --force-create --build```
+** Recommended: run ```docker-compose up --force-create --build```
 The application contains 5 containers [MySql, Redis, ElasticSearch, App, Sidekiq]
 
 ### Local Machine
