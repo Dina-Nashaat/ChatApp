@@ -1,17 +1,20 @@
-FROM ruby:2.5-slim
+FROM ruby:2.5.5
 
 LABEL Name=chatapp Version=0.0.1
 ENV APP_HOME /chatapp
 
-RUN apt-get update -qq && \
+RUN apt-get update && \
     apt-get install -y mysql-client \
-    --no-install-recommends
+                    libxml2-dev libxslt-dev libgmp-dev\
+                    --no-install-recommends
 
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 COPY Gemfile Gemfile.lock ./
-RUN bundle install
+
+ENV BUNDLER_VERSION 2.0.1
+RUN gem install bundler && bundle install --jobs 2 --verbose
+
 COPY . $APP_HOME
 
-EXPOSE 3000
-CMD ["rails", "server", "-b", "0.0.0.0 "]
+CMD whenever --update-crontab

@@ -4,15 +4,71 @@ services:
   mysql:
     image: mysql:5.6.34
     ports:
-      - "3306:3306"
+      - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=chatAppDev
 
+  redis:
+    image: redis:4.0-alpine
+    command: redis-server
+    ports:
+      - 6379:6379
+
+  elasticsearch:
+      image: docker.elastic.co/elasticsearch/elasticsearch:5.5.3
+      environment:
+        - cluster.name=docker-cluster
+        - bootstrap.memory_lock=true
+        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        - xpack.security.enabled=false
+        - xpack.monitoring.enabled=false
+        - xpack.graph.enabled=false
+        - xpack.watcher.enabled=false
+        - REDIS_URL=redis://redis:6379/0
+      ulimits:
+        memlock:
+          soft: -1
+          hard: -1
+      volumes:
+        - esdata1:/usr/share/elasticsearch/data
+      ports:
+        - 9200:9200
+
+  sidekiq:
+    build: .
+    links:
+      - redis
+      - elasticsearch
+    depends_on:
+      - redis
+      - elasticsearch
+    command: "sidekiq"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - ELASTICSEARCH_URL=elasticsearch
+
   app:
-    image: :dinanashaat/chatapp
+    image: dinanashaat/chatapp
     ports:
       - 3000:3000
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "rm -f tmp/pids/server.pid && rails db:drop db:create db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
     depends_on:
       - mysql
+      - redis
+      - elasticsearch
+      - sidekiq
+    links:
+      - redis
+      - mysql
+      - elasticsearch
+      - sidekiq
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - ELASTICSEARCH_URL=elasticsearch
+      - RAILS_ENV=development
+volumes:
+  esdata1:
+    driver: local
+  esdata2:
+    driver: local
