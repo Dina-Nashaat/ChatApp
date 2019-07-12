@@ -20,6 +20,7 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - ELASTICSEARCH_URL=elasticsearch
       - RAILS_ENV=development
+      - WAIT_HOSTS=mysql:3306
   mysql:
     image: mysql:5.6.34
     ports:
@@ -55,7 +56,7 @@ services:
         - 9200:9200
 
   sidekiq:
-    build: .
+    image: dinanashaat/chatapp
     links:
       - redis
       - elasticsearch

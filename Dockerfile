@@ -14,7 +14,9 @@ COPY Gemfile Gemfile.lock ./
 
 ENV BUNDLER_VERSION 2.0.1
 RUN gem install bundler && bundle install --jobs 2 --verbose
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait
+RUN chmod +x /wait
 
 COPY . $APP_HOME
 
-CMD whenever --update-crontab
+CMD /wait && whenever --update-crontab
