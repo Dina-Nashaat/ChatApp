@@ -56,4 +56,4 @@ To enable background services:
 ## TODO:
 - Rspec
 - Validations and Error Handling
-
+- Deploy on AWS
