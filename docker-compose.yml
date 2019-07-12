@@ -20,7 +20,7 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - ELASTICSEARCH_URL=elasticsearch
       - RAILS_ENV=development
-      - WAIT_HOSTS=mysql:3306
+    restart: always
   mysql:
     image: mysql:5.6.34
     ports:
