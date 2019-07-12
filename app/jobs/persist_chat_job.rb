@@ -1,10 +1,12 @@
 class PersistChatJob < ApplicationJob
   queue_as :chats
 
-  def perform(chat_params)
-    # TODO handle errors:
-    # Check if Application persisted
-    Chat.create(chat_params)
-    sleep(5)
+  def perform(chat, application, action)
+    action == :create && Message.create(chat)
+    if action == :delete
+      chat.deleted = true
+      chat.save
+    end
+    CountChatsJob.perform_later application
   end
 end

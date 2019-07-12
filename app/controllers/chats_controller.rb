@@ -3,20 +3,17 @@ class ChatsController < ApplicationController
   before_action :set_chat, only: [:destroy]
 
   def index
-    # Chat.All is scoped by tenant
     render json: serialized_chat(Chat.active)
   end
 
   def create
-    PersistChatJob.perform_later chat
-    CountChatsJob.perform_later @application
+    PersistChatJob.perform_later(chat, @application, :create)
     render json: serialized_chat(chat), status: :created
   end
 
   def destroy
-    @chat.deleted = true
-    @chat.save
-    CountChatsJob.perform_later @application
+    PersistChatJob.perform_later(@chat, @application, :delete)
+    render json: serialized_chat(chat), status: :created
   end
 
   private

@@ -11,9 +11,7 @@ class MessagesController < ApplicationController
   end
 
   def create
-    PersistMessageJob.perform_later message
-    CountMessagesJob.perform_later @chat
-    Message.reindex(async: true)
+    PersistMessageJob.perform_later message, @chat, :create
     render json: serialized_message(message), status: :created
   end
 
@@ -31,9 +29,8 @@ class MessagesController < ApplicationController
   end
 
   def destroy
-    @message.deleted = true
-    @message.save
-    CountMessagesJob.perform_later @chat
+    PersistMessageJob.perform_later message, @chat, :create
+    render json: serialized_message(message), status: :created
   end
 
   private
