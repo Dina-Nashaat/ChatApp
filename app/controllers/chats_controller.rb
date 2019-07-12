@@ -7,12 +7,12 @@ class ChatsController < ApplicationController
   end
 
   def create
-    PersistChatJob.perform_later(chat, @application, :create)
+    PersistChatJob.perform_later(chat, @application, 'create')
     render json: serialized_chat(chat), status: :created
   end
 
   def destroy
-    PersistChatJob.perform_later(@chat, @application, :delete)
+    PersistChatJob.perform_later(@chat, @application, 'delete')
     render json: serialized_chat(chat), status: :created
   end
 

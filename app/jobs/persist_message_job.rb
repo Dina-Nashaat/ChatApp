@@ -2,8 +2,8 @@ class PersistMessageJob < ApplicationJob
   queue_as :default
 
   def perform(message, chat, action)
-    action == :create && Message.create(message)
-    if action == :delete
+    action == 'create' && Message.create(message)
+    if action == 'delete'
       message.deleted = true
       message.save
     end

@@ -2,8 +2,8 @@ class PersistChatJob < ApplicationJob
   queue_as :chats
 
   def perform(chat, application, action)
-    action == :create && Message.create(chat)
-    if action == :delete
+    action == 'create' && Chat.create(chat)
+    if action == 'delete'
       chat.deleted = true
       chat.save
     end
