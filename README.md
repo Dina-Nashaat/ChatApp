@@ -28,30 +28,28 @@ A cron job that runs every 1 minute to update ElasticSearch indices.
 
 ## Endpoint Documentation
 [- Postman Collection](https://www.getpostman.com/collections/2e7b12c5dba2eb1898c0)  
-Postman Collection is automated. All you have to do is press `Send`. Updating environment variables is handled automatically.  
+Postman Collection is automated. All you have to do is press `Send`. Updating environment variables is handled automatically from json response.
 [- Postman Documentation](https://documenter.getpostman.com/view/4811662/SVSGQAnL?version=latest#6093b686-8d77-4e29-b6c6-16d6e19b6730)
 
 ## How to start
 ### Docker
 * Configuration
 Run the application through docker: ```docker-compose up```
-** Recommended: run ```docker-compose up --force-create --build```
 The application contains 5 containers [MySql, Redis, ElasticSearch, App, Sidekiq]
 
 ### Local Machine
-* Database creation
-To configure the project locally:
-- Install mysql
-- Cofigure ```database.yml``` with the correct mysql host, username, password
-- You may leave the default configuration and run ```docker-compose up mysql```
-run ```rails db:create db:migrate```
-- Remove {url: .. } from ````config/environment/development.rb``` from redis_cache to use the default localhost
+* Bundle Install
+* Configure Database:
+    - Install mysql-client
+    - Cofigure ```database.yml``` with the correct mysql host, username, and password
+- Run the Migration files ```rails db:create db:migrate```
+- Remove {url: .. } from ````config/environment/development.rb``` from redis_cache to use the default localhost and port (default: 6379)
 
 * Services (job queues, cache servers, search engines, etc.)  
 To enable background services:
-- install and run Redis OR ```docker-compose up Redis```
-- install and run Elastic-Search OR ```docker-compose up ElasticSearch```
-- run sidekiq OR ```docker-compose up sidkiq```
+- install and run Redis
+- install and run Elastic-Search
+- run sidekiq
 
 ## TODO:
 - Rspec
