@@ -27,9 +27,10 @@ Using `ElasticSearch` and `SearchKick` to partially search for messages belongin
 A cron job that runs every 1 minute to update ElasticSearch indices.
 
 ## Endpoint Documentation
-- Postman Collection: https://www.getpostman.com/collections/2e7b12c5dba2eb1898c0
+I'm an inline-style link](https://www.google.com)
+[- Postman Collection](https://www.getpostman.com/collections/2e7b12c5dba2eb1898c0)  
 Postman Collection is automated. All you have to do is press `Send`. Updating environment variables is handled automatically.
-- Postman Documentation: https://documenter.getpostman.com/view/4811662/SVSGQAnL?version=latest#6093b686-8d77-4e29-b6c6-16d6e19b6730
+[- Postman Documentation](https://documenter.getpostman.com/view/4811662/SVSGQAnL?version=latest#6093b686-8d77-4e29-b6c6-16d6e19b6730)
 
 ## How to start
 ### Docker
