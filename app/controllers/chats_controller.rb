@@ -25,7 +25,7 @@ class ChatsController < ApplicationController
     end
     
     def serialized_chat(response)
-      response.to_json(only: [:number])
+      response.to_json(only: [:number, :messages_count])
     end
 
     def number

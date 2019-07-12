@@ -30,7 +30,7 @@ class ApplicationsController < ApplicationController
 
   private
     def serialized_application(response)
-      response.to_json(only: [:access_token, :name])
+      response.to_json(only: [:access_token, :name, :chats_count])
     end
 
     def application_params
