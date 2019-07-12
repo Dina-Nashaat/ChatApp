@@ -1,0 +1,6 @@
+:concurrency: 3
+:queues:
+  - ["chats", 6]
+  - ["messages", 4]
+  - ["default", 2]
+  - ["searchkick", 1]

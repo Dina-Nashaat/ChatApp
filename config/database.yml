@@ -5,6 +5,7 @@ default: &default
   username: root
   password: "root"
   host: mysql
+  # host: 127.0.0.1
 
 development:
   <<: *default
