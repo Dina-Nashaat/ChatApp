@@ -4,7 +4,7 @@ LABEL Name=chatapp Version=0.0.1
 ENV APP_HOME /chatapp
 
 RUN apt-get update && \
-    apt-get install -y mysql-client \
+    apt-get install -y default-mysql-client \
                     libxml2-dev libxslt-dev libgmp-dev\
                     --no-install-recommends
 
