@@ -4,7 +4,7 @@ LABEL Name=chatapp Version=0.0.1
 ENV APP_HOME /chatapp
 
 RUN apt-get update && \
-    apt-get install -y default-mysql-client \
+    apt-get install -y cron default-mysql-client \
                     libxml2-dev libxslt-dev libgmp-dev\
                     --no-install-recommends
 
@@ -17,4 +17,4 @@ RUN gem install bundler && bundle install --jobs 2 --verbose
 
 COPY . $APP_HOME
 
-CMD whenever --update-crontab
+CMD bash -c "bundle exec whenever --update-crontab && cron -f"
