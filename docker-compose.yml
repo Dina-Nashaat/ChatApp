@@ -5,7 +5,7 @@ services:
     image: dinanashaat/chatapp
     ports:
       - 3000:3000
-    command: bash -c "rm -f tmp/pids/server.pid && rails db:drop db:create db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "rm -f tmp/pids/server.pid && rails db:drop db:create db:migrate && bundle exec whenever --update-crontab && cron -f && bundle exec rails s -p 3000 -b '0.0.0.0'"
     depends_on:
       - mysql
       - redis
