@@ -7,6 +7,7 @@ class PersistMessageJob < ApplicationJob
       message.deleted = true
       message.save
     end
+    Message.reindex(async: true)
     CountMessagesJob.perform_later chat
   end
 end
